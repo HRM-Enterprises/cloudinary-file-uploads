@@ -23,8 +23,10 @@ function create_photo( $file_path, $orig_name )
     return $result;
 }
 
-$current = getcwd();
-$uploadDir = $current . '/uploads';
+//$current = getcwd();
+//$uploadDir = $current . '/uploads';
+
+$uploadDir = '/mnt/cloudinary/Products';
 
 $files = preg_grep('~\.(jpg|jpeg|png)$~', scandir($uploadDir));
 
