@@ -37,7 +37,8 @@ if(empty($files)){
 $files_data = array();
 
 foreach($files as $file) {
-    $check = \PhotoUpload\check_photo_uploaded($file);
+    $checkFile = 'Products/' . $file;
+    $check = \PhotoUpload\check_photo_uploaded($checkFile);
 
     $filePath = $uploadDir . '/' . $file;
 
