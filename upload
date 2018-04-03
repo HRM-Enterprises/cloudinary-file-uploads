@@ -1,0 +1,51 @@
+<?php
+require 'PhotoUpload.php';
+
+function delete_file($filepath)
+{
+    if(is_file($filepath)) {
+        unlink($filepath);
+    }
+}
+
+function create_photo( $file_path, $orig_name )
+{
+    # Upload the received image file to Cloudinary
+    $result = \Cloudinary\Uploader::upload($file_path, array(
+            "tags" => "product_photo_uploader",
+            "folder" => "Products",
+            "public_id" => $orig_name,
+    ));
+
+    unlink($file_path);
+    error_log("Upload result: " . \PhotoUpload\ret_var_dump($result));
+    $photo = \PhotoUpload\create_photo_model($result);
+    return $result;
+}
+
+$current = getcwd();
+$uploadDir = $current . '/uploads';
+
+$files = preg_grep('~\.(jpg|jpeg|png)$~', scandir($uploadDir));
+
+if(empty($files)){
+    echo 'no files in directory!' . PHP_EOL;
+}
+
+$files_data = array();
+
+foreach($files as $file) {
+    $check = \PhotoUpload\check_photo_uploaded($file);
+
+    $filePath = $uploadDir . '/' . $file;
+
+    if($check === NULL) {
+        array_push($files_data, create_photo($filePath,$file));
+        delete_file($filePath);
+    } else {
+        echo $check['public_id'] . " already uploaded on " . $check['created_at'] . PHP_EOL;
+        delete_file($filePath);
+    }
+
+}
+
