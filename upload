@@ -31,12 +31,15 @@ $uploadDir = '/mnt/cloudinary/Products';
 $files = preg_grep('~\.(jpg|jpeg|png)$~', scandir($uploadDir));
 
 if(empty($files)){
-    echo 'no files in directory!' . PHP_EOL;
+    exit('no files in directory!');
 }
+
+//limit to first 500 items in directory, throttle to limit
+$process_files = array_slice($input, 0, 500);
 
 $files_data = array();
 
-foreach($files as $file) {
+foreach($process_files as $file) {
     $checkFile = 'Products/' . $file;
     $check = \PhotoUpload\check_photo_uploaded($checkFile);
 
