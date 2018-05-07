@@ -35,7 +35,7 @@ if(empty($files)){
 }
 
 //limit to first 500 items in directory, throttle to limit
-$process_files = array_slice($files, 0, 500);
+$process_files = array_slice($files, 0, 3000);
 
 $files_data = array();
 
