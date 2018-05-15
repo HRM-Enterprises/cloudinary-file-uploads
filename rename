@@ -4,7 +4,7 @@ require 'PhotoUpload.php';
 
 function rename_photo($old_name, $new_name) {
     $updated_info =  \Cloudinary\Uploader::rename($old_name, $new_name);
-    $photo = \PhotoUpload\update_photo_name($old_name,$updated_info)
+    $photo = \PhotoUpload\update_photo_name($old_name,$updated_info);
     
 }
 
