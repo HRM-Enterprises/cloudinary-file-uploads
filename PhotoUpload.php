@@ -67,23 +67,6 @@ namespace PhotoUpload {
     return $uploadedPhotos;
   }
 
-  function update_photo_name($old_name,$options = array()){
-
-    $photo = \R::load('photo', $old_name);
-    
-    foreach ( $options as $key => $value ) {
-      if ($key != 'tags') {
-        $photo->{$key} = $value;
-      }
-    }
-
-    $photo->created_at = (array_key_exists('created_at', $photo) ?
-    DateTime::createFromFormat(DateTime::ISO8601, $photo->created_at) :
-    \R::isoDateTime());
-
-    $id = \R::store($photo);
-
-  }
 
   function create_photo_model($options = array()) {
     $photo = \R::dispense('photo');

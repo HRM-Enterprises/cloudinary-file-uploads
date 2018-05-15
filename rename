@@ -1,31 +1,21 @@
 <?php
 require 'PhotoUpload.php';
 
-
-function rename_photo($old_name, $new_name) {
-    $updated_info =  \Cloudinary\Uploader::rename($old_name, $new_name);
-    $photo = \PhotoUpload\update_photo_name($old_name,$updated_info);
-    
-}
-
 $photos = R::find('photo', 'public_id LIKE ?', array('%.j%'));
 
-//var_dump(count($photos));
 
 foreach ($photos as $photo) {
     $trimName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$photo->public_id);
-    //var_dump($photo->public_id);
-    if($photo->public_id === 'Products/1NX6O.jpg') {
-        $updated_info =  \Cloudinary\Uploader::rename($photo->public_id, $trimName);
 
-        $photo->public_id = $updated_info['public_id'];
-        $photo->url = $updated_info['url'];
-        $photo->secure_url = $updated_info['secure_url'];
+    $updated_info =  \Cloudinary\Uploader::rename($photo->public_id, $trimName);
 
-        $photo->created_at = DateTime::createFromFormat(DateTime::ISO8601, $updated_info['created_at']);
+    $photo->public_id = $updated_info['public_id'];
+    $photo->url = $updated_info['url'];
+    $photo->secure_url = $updated_info['secure_url'];
 
-        $id = \R::store($photo);
-    }
+    $photo->created_at = DateTime::createFromFormat(DateTime::ISO8601, $updated_info['created_at']);
+
+    $id = \R::store($photo);
 }
 
 
