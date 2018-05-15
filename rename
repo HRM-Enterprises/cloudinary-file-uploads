@@ -4,7 +4,8 @@ require 'PhotoUpload.php';
 
 function rename_photo($old_name, $new_name) {
     $updated_info =  \Cloudinary\Uploader::rename($old_name, $new_name);
-    var_dump($updated_info);
+    $photo = \PhotoUpload\update_photo_name($old_name,$updated_info)
+    
 }
 
 $photos = R::find('photo', 'public_id LIKE ?', array('%.j%'));
@@ -14,7 +15,7 @@ $photos = R::find('photo', 'public_id LIKE ?', array('%.j%'));
 foreach ($photos as $photo) {
     $trimName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$photo->public_id);
     //var_dump($photo->public_id);
-    if($photo->public_id === 'Products/1NX4O.jpg') {
+    if($photo->public_id === 'Products/1NX4P.jpg') {
         rename_photo($photo->public_id, $trimName);
     }
 }
