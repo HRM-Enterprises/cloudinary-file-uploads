@@ -67,6 +67,15 @@ namespace PhotoUpload {
     return $uploadedPhotos;
   }
 
+  function update_photo_name($old_name,$new_name){
+
+    $photo = \R::load('photo', $old_name);
+    $photo->public_id = $new_name;
+    $id = \R::store($photo);
+
+    return $id;
+  }
+
   function create_photo_model($options = array()) {
     $photo = \R::dispense('photo');
 
