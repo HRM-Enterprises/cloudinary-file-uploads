@@ -3,6 +3,7 @@ require 'PhotoUpload.php';
 
 $photos = R::find('photo', 'public_id LIKE ?', array('%.j%'));
 
+$photos = array_slice($photos, 0, 3000);
 
 foreach ($photos as $photo) {
     $trimName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$photo->public_id);
