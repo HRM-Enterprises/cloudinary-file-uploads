@@ -14,7 +14,9 @@ $photos = R::find('photo', 'public_id LIKE ?', array('%.j%'));
 foreach ($photos as $photo) {
     $trimName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$photo->public_id);
     //var_dump($photo->public_id);
-    rename_photo($photo->public_id, $trimName);
+    if($photo->public_id === 'Products/1NX4O.jpg') {
+        rename_photo($photo->public_id, $trimName);
+    }
 }
 
 
