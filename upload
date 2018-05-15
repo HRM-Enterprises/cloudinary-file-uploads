@@ -23,8 +23,6 @@ function create_photo( $file_path, $orig_name )
     return $result;
 }
 
-//$current = getcwd();
-//$uploadDir = $current . '/uploads';
 
 $uploadDir = '/mnt/cloudinary/Products';
 
@@ -34,8 +32,7 @@ if(empty($files)){
     exit('no files in directory!');
 }
 
-//limit to first 500 items in directory, throttle to limit
-$process_files = array_slice($files, 0, 3000);
+$process_files = array_slice($files, 0, 20);
 
 $files_data = array();
 
@@ -45,8 +42,10 @@ foreach($process_files as $file) {
 
     $filePath = $uploadDir . '/' . $file;
 
+    $fileName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$file);
+
     if($check === NULL) {
-        array_push($files_data, create_photo($filePath,$file));
+        array_push($files_data, create_photo($filePath,$fileName));
         delete_file($filePath);
     } else {
         echo $check['public_id'] . " already uploaded on " . $check['created_at'] . PHP_EOL;
