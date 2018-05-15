@@ -32,7 +32,7 @@ if(empty($files)){
     exit('no files in directory!');
 }
 
-$process_files = array_slice($files, 0, 20);
+$process_files = array_slice($files, 0, 3000);
 
 $files_data = array();
 
