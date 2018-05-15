@@ -15,8 +15,16 @@ $photos = R::find('photo', 'public_id LIKE ?', array('%.j%'));
 foreach ($photos as $photo) {
     $trimName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$photo->public_id);
     //var_dump($photo->public_id);
-    if($photo->public_id === 'Products/1NX4P.jpg') {
-        rename_photo($photo->public_id, $trimName);
+    if($photo->public_id === 'Products/1NX6O.jpg') {
+        $updated_info =  \Cloudinary\Uploader::rename($photo->public_id, $new_name);
+
+        $photo->public_id = $updated_info['public_id'];
+        $photo->url = $updated_info['url'];
+        $photo->secure_url = $updated_info['secure_url'];
+
+        $photo->created_at = DateTime::createFromFormat(DateTime::ISO8601, $updated_info['created_at']);
+
+        $id = \R::store($photo);
     }
 }
 
