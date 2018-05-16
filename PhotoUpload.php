@@ -3,6 +3,7 @@ namespace PhotoUpload {
   //require 'vendor/autoload.php';
   require 'lib/rb.php';
   require 'vendor/cloudinary/cloudinary_php/src/Cloudinary.php';
+  require 'vendor/cloudinary/cloudinary_php/src/Error.php';
   require 'vendor/cloudinary/cloudinary_php/src/Uploader.php';
   require 'vendor/cloudinary/cloudinary_php/src/Api.php'; // Only required for creating upload presets on the fly
   error_reporting(E_ALL | E_STRICT);
