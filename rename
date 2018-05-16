@@ -8,15 +8,27 @@ $photos = array_slice($photos, 0, 3000);
 foreach ($photos as $photo) {
     $trimName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$photo->public_id);
 
-    $updated_info =  \Cloudinary\Uploader::rename($photo->public_id, $trimName);
+    try {
+        $updated_info =  \Cloudinary\Uploader::rename($photo->public_id, $trimName);
+    } catch(Exception $e) {
+        echo 'Caught Exception: ', $e->getMessage(), PHP_EOL;
+    }
+    
+    if(isset($updated_info)) {
+        $photo->public_id = $updated_info['public_id'];
+        $photo->url = $updated_info['url'];
+        $photo->secure_url = $updated_info['secure_url'];
 
-    $photo->public_id = $updated_info['public_id'];
-    $photo->url = $updated_info['url'];
-    $photo->secure_url = $updated_info['secure_url'];
+        $photo->created_at = DateTime::createFromFormat(DateTime::ISO8601, $updated_info['created_at']);
 
-    $photo->created_at = DateTime::createFromFormat(DateTime::ISO8601, $updated_info['created_at']);
+        $id = \R::store($photo);
+    } else {
 
-    $id = \R::store($photo);
+        $photo->public_id = $trimName . '_jpg';
+        $id = \R::store($photo);
+
+    }
+    
 }
 
 
