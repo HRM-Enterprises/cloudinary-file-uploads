@@ -1,14 +1,23 @@
 <?php
 require 'PhotoUpload.php';
 
-function delete_file($filepath)
-{
-    if(is_file($filepath)) {
-        unlink($filepath);
-    }
-}
 
 function create_photo( $file_path, $orig_name )
+{
+    # Upload the received image file to Cloudinary
+    $result = \Cloudinary\Uploader::upload($file_path, array(
+            "tags" => "product_photo_uploader",
+            "folder" => "Products",
+            "public_id" => $orig_name,
+    ));
+
+    unlink($file_path);
+    error_log("Upload result: " . \PhotoUpload\ret_var_dump($result));
+    $photo = \PhotoUpload\create_photo_model($result);
+    return $result;
+}
+
+function update_photo( $file_path, $orig_name )
 {
     # Upload the received image file to Cloudinary
     $result = \Cloudinary\Uploader::upload($file_path, array(
@@ -44,13 +53,10 @@ foreach($process_files as $file) {
 
     $fileName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$file);
 
-    if($check === NULL) {
-        array_push($files_data, create_photo($filePath,$fileName));
-        delete_file($filePath);
-    } else {
+    array_push($files_data, create_photo($filePath,$fileName));
+    if($check !== NULL) {
         echo $check['public_id'] . " already uploaded on " . $check['created_at'] . PHP_EOL;
-        delete_file($filePath);
-    }
+    } 
 
 }
 
