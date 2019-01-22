@@ -33,9 +33,9 @@ function update_photo( $file_path, $orig_name )
 }
 
 
-$uploadDir = '/mnt/cloudinary/Products';
+$uploadDir = '/mnt/hrm_data/Websites/cloudinary_upload/Products';
 
-$files = preg_grep('~\.(jpg|jpeg|png)$~', scandir($uploadDir));
+$files = preg_grep('~\.(jpg|jpeg|png)$~i', scandir($uploadDir));
 
 if(empty($files)){
     exit('no files in directory!');
@@ -46,10 +46,16 @@ $process_files = array_slice($files, 0, 3000);
 $files_data = array();
 
 foreach($process_files as $file) {
+
     $checkFile = 'Products/' . $file;
     $check = \PhotoUpload\check_photo_uploaded($checkFile);
 
     $filePath = $uploadDir . '/' . $file;
+
+    $fileInfo = pathinfo($file);
+    $file = $fileInfo['filename'].'.'.strtolower($fileInfo['extension']);
+
+    var_dump(pathinfo($file));
 
     $fileName = preg_replace('/\\.[^.\\s]{3,4}$/', '',$file);
 
