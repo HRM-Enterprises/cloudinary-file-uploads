@@ -33,7 +33,7 @@ function update_photo( $file_path, $orig_name )
 }
 
 
-$uploadDir = '/mnt/cloudinary/Products';
+$uploadDir = '/mnt/hrm_data/Websites/cloudinary_upload/Products';
 
 $files = preg_grep('~\.(jpg|jpeg|png)$~', scandir($uploadDir));
 
