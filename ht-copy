@@ -20,10 +20,10 @@ foreach($tool_prods as $prod) {
     $filename = $prod->sku . '.jpg';
     $file_loc =  $scan_dir . $filename;
     if(file_exists($file_loc)) {
-        echo $filename . ' exists!' . . PHP_EOL;
+        echo $filename . ' exists!' . PHP_EOL;
         copy($file_loc, $upload_dir . $filename);
     } else {
-        echo $filename . ' does NOT exist' . . PHP_EOL;
+        echo $filename . ' does NOT exist' . PHP_EOL;
     }
 
 }
