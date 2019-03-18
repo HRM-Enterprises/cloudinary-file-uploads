@@ -1,0 +1,31 @@
+<?php
+/**
+ * this script checks for already existing images and pulls them into the cloudinary upload queue folder.
+ * add/copy product info to the tool table in the cloudinary db.
+ */
+
+
+require 'PhotoUpload.php';
+
+echo 'starting to check for existing HT images' . date('h:i:sa') . PHP_EOL;
+//scan dir is the large images for product images, upload directory places them in the queue for uploading to cloudinary
+$scan_dir = "/mnt/hrm_data/Websites/'HRM Product Images'/'1000 pixel jpg'/";
+$upload_dir = '/mnt/hrm_data/Websites/cloudinary_upload/Products/';
+
+//get products from tool table in cloudinary db;
+$tool_prods = R::find('tool', 'isinactive = "false"');
+
+foreach($tool_prods as $prod) {
+    var_dump($prod->sku);
+    $filename = $prod->sku . '.jpg';
+    $file_loc =  $scan_dir . $filename;
+    if(file_exists($file_loc)) {
+        echo $filename . ' exists!' . . PHP_EOL;
+        copy($file_loc, $upload_dir . $filename);
+    } else {
+        echo $filename . ' does NOT exist' . . PHP_EOL;
+    }
+
+}
+
+echo 'finished copying ' . date('h:i:sa') . PHP_EOL;
