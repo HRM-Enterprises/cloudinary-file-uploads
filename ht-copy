@@ -16,7 +16,8 @@ echo 'starting to check for existing HT images' . date('h:i:sa') . PHP_EOL;
  */
 
 //$scan_dir = "/mnt/hrm_data/Websites/HRM Product Images/1000 pixel jpg/";
-$scan_dir = "/mnt/hrm_data/Websites/HRM Product Images/567 Product Images/JPG/";
+//$scan_dir = "/mnt/hrm_data/Websites/HRM Product Images/567 Product Images/JPG/";
+$scan_dir = "/mnt/hrm_data/Websites/HRM Product Images/567 Product Images/PNG/";
 $upload_dir = '/mnt/hrm_data/Websites/cloudinary_upload/Products/';
 
 //get products from tool table in cloudinary db;
