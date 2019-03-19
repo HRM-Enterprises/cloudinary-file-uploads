@@ -25,7 +25,7 @@ $tool_prods = R::find('tool', 'isinactive = "false"');
 
 foreach($tool_prods as $prod) {
     var_dump($prod->sku);
-    $filename = $prod->sku . '.jpg';
+    $filename = $prod->sku . '.png';
     $file_loc =  $scan_dir . $filename;
     if(file_exists($file_loc)) {
         echo $filename . ' exists!' . PHP_EOL;
