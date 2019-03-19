@@ -35,7 +35,7 @@ function update_photo( $file_path, $orig_name )
 
 $uploadDir = '/mnt/hrm_data/Websites/cloudinary_upload/Products';
 
-$files = preg_grep('~\.(jpg|jpeg|png)$~i', scandir($uploadDir));
+$files = preg_grep('~\.(jpg|jpeg|png|gif)$~i', scandir($uploadDir));
 
 if(empty($files)){
     exit('no files in directory!');
