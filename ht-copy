@@ -8,8 +8,15 @@
 require 'PhotoUpload.php';
 
 echo 'starting to check for existing HT images' . date('h:i:sa') . PHP_EOL;
-//scan dir is the large images for product images, upload directory places them in the queue for uploading to cloudinary
-$scan_dir = "/mnt/hrm_data/Websites/'HRM Product Images'/'1000 pixel jpg'/";
+/**
+ * scan_dir is the place to search for images. all product images are under HRM_Data/Websites/HRM Product Images on sweetness
+ * '1000 pixel jpg' - Amazon/eBay images
+ * '567 Product Images' - legacy HT images
+ * '1600 Pixel Product Images' - some eBay images
+ */
+
+//$scan_dir = "/mnt/hrm_data/Websites/HRM Product Images/1000 pixel jpg/";
+$scan_dir = "/mnt/hrm_data/Websites/HRM Product Images/567 Product Images/JPG/";
 $upload_dir = '/mnt/hrm_data/Websites/cloudinary_upload/Products/';
 
 //get products from tool table in cloudinary db;
